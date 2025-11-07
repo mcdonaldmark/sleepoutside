@@ -1,6 +1,6 @@
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
-import Alert from './Alert.js';
+import Alert from './alert.js';
 
 const alertSystem = new Alert('../json/alerts.json');
 alertSystem.init();
