@@ -39,11 +39,30 @@ function productDetailsTemplate(product) {
   productImage.src = product.Image;
   productImage.alt = product.NameWithoutBrand;
 
-  document.getElementById("productPrice").textContent = product.FinalPrice;
+  document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
+
   document.getElementById("productColor").textContent = product.Colors[0].ColorName;
   document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
 
   document.getElementById("addToCart").dataset.id = product.Id;
+
+  // -------- Discount Flag --------
+  const discountElement = document.getElementById("productDiscount");
+
+  if (product.SuggestedRetailPrice && product.FinalPrice && product.SuggestedRetailPrice > product.FinalPrice) {
+    const discountAmount = product.SuggestedRetailPrice - product.FinalPrice;
+    const discountPercent = Math.round((discountAmount / product.SuggestedRetailPrice) * 100);
+
+    // display as percentage
+    discountElement.textContent = `Sale: -${discountPercent}%`;
+
+    // optionally, also show $ off:
+    // discountElement.textContent = `Save $${discountAmount.toFixed(2)} (${discountPercent}%)`;
+
+    discountElement.style.display = "inline-block"; // make it visible
+  } else {
+    discountElement.style.display = "none"; // hide if no discount
+  }
 }
 
 // ************* Alternative Display Product Details Method *******************
@@ -63,4 +82,4 @@ function productDetailsTemplate(product) {
 //     <div class="product-detail__add">
 //       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
 //     </div></section>`;
-// }
+//}}
