@@ -16,7 +16,7 @@ export default class ProductDetails {
     // once the HTML is rendered, add a listener to the Add to Cart button
     // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on "this" to understand why.
     document
-      .getElementById("addToCart")
+      .getElementById("add-to-cart")
       .addEventListener("click", this.addProductToCart.bind(this));
   }
 
@@ -32,37 +32,42 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  document.querySelector("h2").textContent = product.Brand.Name;
-  document.querySelector("h3").textContent = product.NameWithoutBrand;
+  document.querySelector("h2").textContent = product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
+  document.querySelector("#p-brand").textContent = product.Brand.Name;
+  document.querySelector("#p-name").textContent = product.NameWithoutBrand;
 
-  const productImage = document.getElementById("productImage");
-  productImage.src = product.Image;
+  const productImage = document.querySelector("#p-image");
+  productImage.src = product.Images.PrimaryExtraLarge;
   productImage.alt = product.NameWithoutBrand;
+  
+  const euroPrice = new Intl.NumberFormat('de-DE',
+    {
+      style: 'currency', currency: 'EUR',
+    }).format(Number(product.FinalPrice) * 0.85);
+  
+const isDiscounted = Number(product.FinalPrice) < Number(product.SuggestedRetailPrice);
+  if (isDiscounted) {
+    const discountPercent = Math.round(
+      ((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100
+    );
 
-  document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
+    const euroOriginal = new Intl.NumberFormat('de-DE', {
+      style: 'currency', 
+      currency: 'EUR'
+    }).format(Number(product.SuggestedRetailPrice) * 0.85);
 
-  document.getElementById("productColor").textContent = product.Colors[0].ColorName;
-  document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
-
-  document.getElementById("addToCart").dataset.id = product.Id;
-
-  // -------- Discount Flag --------
-  const discountElement = document.getElementById("productDiscount");
-
-  if (product.SuggestedRetailPrice && product.FinalPrice && product.SuggestedRetailPrice > product.FinalPrice) {
-    const discountAmount = product.SuggestedRetailPrice - product.FinalPrice;
-    const discountPercent = Math.round((discountAmount / product.SuggestedRetailPrice) * 100);
-
-    // display as percentage
-    discountElement.textContent = `Sale: -${discountPercent}%`;
-
-    // optionally, also show $ off:
-    // discountElement.textContent = `Save $${discountAmount.toFixed(2)} (${discountPercent}%)`;
-
-    discountElement.style.display = "inline-block"; // make it visible
+    document.querySelector("#p-price").innerHTML = `
+      <span class="original-price">${euroOriginal}</span> 
+      ${euroPrice} <span class="discount">-${discountPercent}%</span>
+    `;
   } else {
-    discountElement.style.display = "none"; // hide if no discount
+    document.querySelector("#p-price").textContent = euroPrice;
   }
+  
+  document.querySelector("#p-color").textContent = product.Colors[0].ColorName;
+  document.querySelector("#p-description").innerHTML = product.DescriptionHtmlSimple;
+
+  document.querySelector("#add-to-cart").dataset.id = product.Id;
 }
 
 // ************* Alternative Display Product Details Method *******************
@@ -82,4 +87,4 @@ function productDetailsTemplate(product) {
 //     <div class="product-detail__add">
 //       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
 //     </div></section>`;
-//}}
+// }
