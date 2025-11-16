@@ -40,7 +40,6 @@ export default class ShoppingCart {
     if (listTotalEl) listTotalEl.innerText = `$${this.total}`;
   }
 
-  // register a callback to be called whenever cart changes
   onChange(callback) {
     this.onChangeCallback = callback;
   }
