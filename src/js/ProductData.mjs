@@ -13,15 +13,16 @@ export default class ProductData {
     // this.category = category;
     // this.path = `../public/json/${this.category}.json`;
   }
-async getData(category) {
-  const response = await fetch(`/json/${category}.json`);
-  const data = await convertToJson(response);
-  return data;
+  async getData(category) {
+    const response = await fetch(`${baseURL}products/search/${category}`);
+    const data = await convertToJson(response);
+    
+    return data.Result;
   }
-  
-async findProductById(id) {
-  const response = await fetch(`/json/all-products.json`);
-  const products = await convertToJson(response);
-  return products.find((item) => item.Id === id);
-}
+  async findProductById(id) {
+    const response = await fetch(`${baseURL}product/${id}`);
+    const data = await convertToJson(response);
+    console.log(data.Result);
+    return data.Result;
+  }
 }
