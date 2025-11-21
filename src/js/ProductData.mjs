@@ -11,26 +11,27 @@ export default class ProductData {
     // Nothing needed in constructor
   }
 
-async getData(category) {
-  try {
-    const response = await fetch(`/json/${category.toLowerCase()}.json`);
-    const data = await convertToJson(response);
-    return data;
-  } catch (err) {
-    console.error(`Failed to load /json/${category}.json`, err);
-    return [];
+  // Get all products for a specific category
+  async getData(category) {
+    try {
+      const response = await fetch(`/json/${category.toLowerCase()}.json`);
+      const data = await response.json();
+      return data; // returns array of products
+    } catch (err) {
+      console.error(`Failed to load /json/${category}.json`, err);
+      return [];
+    }
   }
-}
 
-async findProductById(id) {
-  try {
-    const response = await fetch(`/json/all-products.json`);
-    const products = await convertToJson(response);
-    return products.find((item) => item.Id === id) || null;
-  } catch (err) {
-    console.error("Failed to load /json/all-products.json", err);
-    return null;
+  // Find a product by ID within a specific category file
+  async findProductById(category, id) {
+    try {
+      const response = await fetch(`/json/${category.toLowerCase()}.json`);
+      const products = await response.json();
+      return products.find((item) => item.Id === id) || null;
+    } catch (err) {
+      console.error(`Failed to load /json/${category}.json`, err);
+      return null;
+    }
   }
-}
-
 }
