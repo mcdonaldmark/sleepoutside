@@ -1,28 +1,41 @@
-const baseURL = import.meta.env.VITE_SERVER_URL;
-
 function convertToJson(res) {
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("Bad Response");
+    throw new Error("Failed to fetch JSON");
   }
 }
 
 export default class ProductData {
   constructor() {
-    // this.category = category;
-    // this.path = `../public/json/${this.category}.json`;
+    // Nothing needed in constructor
   }
+
+  // Get all products for a specific category
   async getData(category) {
-    const response = await fetch(`${baseURL}products/search/${category}`);
-    const data = await convertToJson(response);
-    
-    return data.Result;
+    try {
+      const response = await fetch(`/json/${category}.json`);
+      const data = await convertToJson(response);
+      return data; // keep the same return format as your original backend
+    } catch (err) {
+      console.error(`Failed to load /json/${category}.json`, err);
+      return [];
+    }
   }
+
+  // Find a product by ID from the "all-products.json" file
   async findProductById(id) {
-    const response = await fetch(`${baseURL}product/${id}`);
-    const data = await convertToJson(response);
-    console.log(data.Result);
-    return data.Result;
+    try {
+      const response = await fetch(`/json/all-products.json`);
+      const products = await convertToJson(response);
+      const product = products.find((item) => item.Id === id);
+      if (!product) {
+        console.warn(`Product with ID ${id} not found`);
+      }
+      return product;
+    } catch (err) {
+      console.error("Failed to load /json/all-products.json", err);
+      return null;
+    }
   }
 }
