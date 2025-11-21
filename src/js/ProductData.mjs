@@ -9,20 +9,33 @@ function convertToJson(res) {
 }
 
 export default class ProductData {
-  constructor() {
-    // this.category = category;
-    // this.path = `../public/json/${this.category}.json`;
+  async getData(category) {
+    try {
+      const response = await fetch(`/json/${category}.json`);
+      const data = await response.json();
+      return data.Result || [];  // <-- return only the array of products
+    } catch (err) {
+      console.error(`Failed to load /json/${category}.json`, err);
+      return [];
+    }
   }
+  
   async getData(category) {
     const response = await fetch(`${baseURL}products/search/${category}`);
     const data = await convertToJson(response);
     
     return data.Result;
   }
-  async findProductById(id) {
-    const response = await fetch(`${baseURL}product/${id}`);
-    const data = await convertToJson(response);
-    console.log(data.Result);
-    return data.Result;
+
+  async findProductById(category, id) {
+    try {
+      const response = await fetch(`/json/${category}.json`);
+      const data = await response.json();
+      const products = data.Result || [];
+      return products.find(p => p.Id === id) || null;
+    } catch (err) {
+      console.error(`Failed to load /json/${category}.json`, err);
+      return null;
+    }
   }
 }
