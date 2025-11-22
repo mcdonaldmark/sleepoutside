@@ -1,4 +1,4 @@
-const baseURL = "https://sleepoutside-1.onrender.com/";
+const baseURL = "https://sleepoutside.onrender.com/";
 async function convertToJson(res) {
   const data = await res.json();
   if (res.ok) {
