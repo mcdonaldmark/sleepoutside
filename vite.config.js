@@ -1,10 +1,9 @@
-import { resolve } from "path"
-import { defineConfig } from "vite"
+import { resolve } from "path";
+import { defineConfig } from "vite";
 
 export default defineConfig(({ mode }) => ({
   root: "src/",
-  // Use '/' for dev, '/sleepoutside/' for production
-  base: mode === "production" ? "/sleepoutside/" : '/',
+  base: mode === "production" ? "/sleepoutside/" : "/",
   build: {
     outDir: "../dist",
     rollupOptions: {
@@ -13,8 +12,8 @@ export default defineConfig(({ mode }) => ({
         cart: resolve(__dirname, "src/cart/index.html"),
         checkout: resolve(__dirname, "src/checkout/index.html"),
         product: resolve(__dirname, "src/product_pages/index.html"),
-        product_listing: resolve(__dirname, "src/product_listing/index.html"),
-      },
-    },
-  },
-}))
+        product_listing: resolve(__dirname, "src/product_listing/index.html")
+      }
+    }
+  }
+}));
