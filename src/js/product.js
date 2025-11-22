@@ -1,15 +1,16 @@
 import { getParam, loadHeaderFooter, qs } from "./utils.mjs";
-import ProductData from "./ProductData.mjs"; // local JSON
+import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 import ShoppingCart from "./ShoppingCart.mjs";
 
-const category = getParam("category");  // Needed to find product in the correct JSON
+const category = getParam("category") || "tents";
 const productId = getParam("product");
 
-const dataSource = new ProductData(); // local JSON
-const product = new ProductDetails(productId, dataSource);
+const dataSource = new ProductData();
+const product = new ProductDetails(productId, category, dataSource);
 
-const cart = new ShoppingCart("so-cart", ".product-list");
+// Make sure a cart container exists on product page
+const cart = new ShoppingCart("so-cart", ".cart-container");
 
 function updateCartCounter(total, itemsCount) {
   const countEl = qs(".cart-count");

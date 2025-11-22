@@ -1,13 +1,17 @@
 import { loadHeaderFooter, getParam, qs } from "./utils.mjs";
-import ProductData from "./ProductData.mjs"; // Use local JSON
+import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 import ShoppingCart from "./ShoppingCart.mjs";
 
+// Get category from URL
 const category = getParam("category");
-const element = document.querySelector(".product-list");
-const dataSource = new ProductData(); // switched from ExternalServices
+const listEl = document.querySelector(".product-list"); // Must match HTML
 
-const cart = new ShoppingCart("so-cart", ".product-list");
+// Initialize data source
+const dataSource = new ProductData();
+
+// Initialize cart in a separate container
+const cart = new ShoppingCart("so-cart", ".cart-container");
 
 function updateCartCounter(total, itemsCount) {
   const countEl = qs(".cart-count");
@@ -16,9 +20,11 @@ function updateCartCounter(total, itemsCount) {
 }
 
 loadHeaderFooter().then(() => {
+  // Initialize cart
   cart.onChange(updateCartCounter);
   cart.init();
 
-  const listing = new ProductList(category, dataSource, element);
+  // Initialize product list
+  const listing = new ProductList(category, dataSource, listEl);
   listing.init();
 });
