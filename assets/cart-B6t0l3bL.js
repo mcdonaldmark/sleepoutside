@@ -1,0 +1,1 @@
+import{l as a,S as r,q as e}from"./ShoppingCart-ClDtzCIC.js";const o=new r("so-cart",".product-list");function c(s,n){const t=e(".cart-count");t&&(t.textContent=n||0)}a().then(()=>{o.onChange(c),o.init()});
