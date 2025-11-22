@@ -12,7 +12,7 @@ function updateCartCounter(total, itemsCount) {
 }
 
 loadHeaderFooter().then(() => {
-  // initialize the shared/header cart AFTER header is loaded
+
   const cart = new ShoppingCart("so-cart", ".cart-container");
   cart.onChange(updateCartCounter);
   cart.init();

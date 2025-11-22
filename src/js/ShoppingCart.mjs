@@ -25,7 +25,7 @@ export default class ShoppingCart {
     this.total = 0;
     this.onChangeCallback = null;
 
-    // bind for event listener cleanup if needed
+
     this._onExternalCartUpdated = this._onExternalCartUpdated.bind(this);
   }
 
@@ -35,17 +35,17 @@ export default class ShoppingCart {
     this.renderCartContents();
     this.triggerChange();
 
-    // listen for global cart-updated events (e.g., from other pages/components)
+
     window.addEventListener("cart-updated", this._onExternalCartUpdated);
   }
 
-  // cleanup if ever needed
+
   destroy() {
     window.removeEventListener("cart-updated", this._onExternalCartUpdated);
   }
 
   _onExternalCartUpdated() {
-    // reload from storage and re-render
+   
     this.list = getLocalStorage(this.key) || [];
     this.calculateTotal();
     this.renderCartContents();

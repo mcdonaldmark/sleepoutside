@@ -32,7 +32,7 @@ export default class ProductDetails {
 
     this.renderProductDetails("main");
 
-    // attach event safely after rendering
+
     const addButton = document.querySelector("#addToCart");
     if (addButton) {
       addButton.addEventListener("click", this.addToCart.bind(this));
@@ -46,7 +46,7 @@ export default class ProductDetails {
     cartContents.push(this.product);
     setLocalStorage("so-cart", cartContents);
 
-    // notify any ShoppingCart instances to re-load and re-render
+
     window.dispatchEvent(new CustomEvent("cart-updated"));
 
     alertMessage(`${this.product.NameWithoutBrand} added to cart!`);

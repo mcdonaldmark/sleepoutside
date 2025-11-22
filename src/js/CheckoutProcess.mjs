@@ -93,7 +93,7 @@ export default class CheckoutProcess {
     try {
       const res = await services.checkout(json);
       setLocalStorage("so-cart", []);
-      // notify other parts of the app
+
       window.dispatchEvent(new CustomEvent("cart-updated"));
       location.assign("/checkout/success.html");
     } catch (err) {
