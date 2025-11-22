@@ -5,7 +5,7 @@ export default defineConfig({
   root: "src/",
   base: "/sleepoutside/", // GitHub Pages base
   build: {
-    outDir: "../docs",
+    outDir: "../dist",
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
