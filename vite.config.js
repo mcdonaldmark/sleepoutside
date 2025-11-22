@@ -5,7 +5,7 @@ export default defineConfig({
   root: "src/",
   base: "/", // use "/" for Render deployment
   build: {
-    outDir: "../docs", // where the built files go
+    outDir: "../dist", // where the built files go
     emptyOutDir: true,
     rollupOptions: {
       input: {
