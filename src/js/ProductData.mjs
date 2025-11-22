@@ -20,7 +20,7 @@ export default class ProductData {
       const response = await fetch(`../json/${category}.json`);
       const data = await response.json();
       const products = Array.isArray(data) ? data : data.Result || [];
-      return products.find(p => String(p.Id) === String(id)) || null;
+      return products.find((p) => String(p.Id) === String(id)) || null;
     } catch (err) {
       console.error(`Failed to load ../json/${category}.json`, err);
       return null;

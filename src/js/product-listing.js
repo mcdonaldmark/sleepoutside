@@ -10,17 +10,16 @@ const listEl = document.querySelector(".product-list"); // Must match HTML
 // Initialize data source
 const dataSource = new ProductData();
 
-// Initialize cart in a separate container
-const cart = new ShoppingCart("so-cart", ".cart-container");
-
-function updateCartCounter(total, itemsCount) {
-  const countEl = qs(".cart-count");
-  if (!countEl) return;
-  countEl.textContent = itemsCount || 0;
-}
-
 loadHeaderFooter().then(() => {
-  // Initialize cart
+  // Initialize cart after header is loaded
+  const cart = new ShoppingCart("so-cart", ".cart-container");
+
+  function updateCartCounter(total, itemsCount) {
+    const countEl = qs(".cart-count");
+    if (!countEl) return;
+    countEl.textContent = itemsCount || 0;
+  }
+
   cart.onChange(updateCartCounter);
   cart.init();
 

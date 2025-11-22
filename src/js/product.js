@@ -9,16 +9,15 @@ const productId = getParam("product");
 const dataSource = new ProductData();
 const product = new ProductDetails(productId, category, dataSource);
 
-// Make sure a cart container exists on product page
-const cart = new ShoppingCart("so-cart", ".cart-container");
-
-function updateCartCounter(total, itemsCount) {
-  const countEl = qs(".cart-count");
-  if (!countEl) return;
-  countEl.textContent = itemsCount || 0;
-}
-
 loadHeaderFooter().then(() => {
+  const cart = new ShoppingCart("so-cart", ".cart-container");
+
+  function updateCartCounter(total, itemsCount) {
+    const countEl = qs(".cart-count");
+    if (!countEl) return;
+    countEl.textContent = itemsCount || 0;
+  }
+
   cart.onChange(updateCartCounter);
   cart.init();
 

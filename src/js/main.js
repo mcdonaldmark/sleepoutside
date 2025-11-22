@@ -1,11 +1,9 @@
 import { loadHeaderFooter, qs } from "./utils.mjs";
-import Alert from './alert.js';
+import Alert from "./alert.js";
 import ShoppingCart from "./ShoppingCart.mjs";
 
-const siteAlerts = new Alert('../json/alerts.json');
+const siteAlerts = new Alert("../json/alerts.json");
 siteAlerts.init();
-
-const cart = new ShoppingCart("so-cart", ".product-list");
 
 function updateCartCounter(total, itemsCount) {
   const countEl = qs(".cart-count");
@@ -14,6 +12,8 @@ function updateCartCounter(total, itemsCount) {
 }
 
 loadHeaderFooter().then(() => {
+  // initialize the shared/header cart AFTER header is loaded
+  const cart = new ShoppingCart("so-cart", ".cart-container");
   cart.onChange(updateCartCounter);
   cart.init();
 });

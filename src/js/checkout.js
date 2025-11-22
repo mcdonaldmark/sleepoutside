@@ -17,14 +17,16 @@ loadHeaderFooter().then(() => {
   const myCheckout = new CheckoutProcess("so-cart", ".checkout-summary");
   myCheckout.init();
 
-  document
-    .querySelector("#zip")
-    .addEventListener("blur", myCheckout.calculateOrdertotal.bind(myCheckout));
+  const zipEl = document.querySelector("#zip");
+  if (zipEl) {
+    zipEl.addEventListener("blur", myCheckout.calculateOrdertotal.bind(myCheckout));
+  }
 
-  document
-    .querySelector("#checkoutSubmit")
-    .addEventListener("click", (e) => {
+  const checkoutBtn = document.querySelector("#checkoutSubmit");
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", (e) => {
       e.preventDefault();
       myCheckout.checkout();
     });
+  }
 });
