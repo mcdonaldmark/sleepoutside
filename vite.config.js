@@ -5,7 +5,7 @@ export default defineConfig({
   root: "src/",
   base: "/sleepoutside/",   // important: matches your repo name
   build: {
-    outDir: "../docs",      // deploy built files to docs/
+    outDir: "../dist",      // deploy built files to docs/
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
