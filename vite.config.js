@@ -1,9 +1,10 @@
-import { resolve } from "path";
-import { defineConfig } from "vite";
+import { resolve } from "path"
+import { defineConfig } from "vite"
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   root: "src/",
-
+  // Use '/' for dev, '/sleepoutside/' for production
+  base: mode === "production" ? "/sleepoutside/" : '/',
   build: {
     outDir: "../dist",
     rollupOptions: {
@@ -16,4 +17,4 @@ export default defineConfig({
       },
     },
   },
-});
+}))
