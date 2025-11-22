@@ -3,9 +3,10 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   root: "src/",
-  base: "/sleepoutside/",   // important: matches your repo name
+  base: "/", // use "/" for Render deployment
   build: {
-    outDir: "../dist",      // deploy built files to docs/
+    outDir: "../docs", // where the built files go
+    emptyOutDir: true,
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
