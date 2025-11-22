@@ -1,10 +1,12 @@
 import { getParam, loadHeaderFooter, qs } from "./utils.mjs";
-import ExternalServices from "./ExternalServices.mjs";
+import ProductData from "./ProductData.mjs"; // local JSON
 import ProductDetails from "./ProductDetails.mjs";
 import ShoppingCart from "./ShoppingCart.mjs";
 
-const dataSource = new ExternalServices("tents");
+const category = getParam("category");  // Needed to find product in the correct JSON
 const productId = getParam("product");
+
+const dataSource = new ProductData(); // local JSON
 const product = new ProductDetails(productId, dataSource);
 
 const cart = new ShoppingCart("so-cart", ".product-list");

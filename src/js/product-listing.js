@@ -1,11 +1,11 @@
 import { loadHeaderFooter, getParam, qs } from "./utils.mjs";
-import ExternalServices from "./ExternalServices.mjs";
+import ProductData from "./ProductData.mjs"; // Use local JSON
 import ProductList from "./ProductList.mjs";
 import ShoppingCart from "./ShoppingCart.mjs";
 
 const category = getParam("category");
 const element = document.querySelector(".product-list");
-const dataSource = new ExternalServices();
+const dataSource = new ProductData(); // switched from ExternalServices
 
 const cart = new ShoppingCart("so-cart", ".product-list");
 
